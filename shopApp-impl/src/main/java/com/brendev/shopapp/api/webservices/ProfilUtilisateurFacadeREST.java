@@ -8,6 +8,8 @@ package com.brendev.shopapp.api.webservices;
 import com.brendev.shopapp.api.dao.core.impl.BaseDaoBean;
 import com.brendev.shopapp.api.entities.ProfilUtilisateur;
 import com.brendev.shopapp.api.entities.ProfilUtilisateurId;
+import com.brendev.shopapp.api.entities.ProfilUtilisateur;
+import com.brendev.shopapp.api.entities.ProfilUtilisateurId;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -18,6 +20,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
@@ -56,54 +59,96 @@ public class ProfilUtilisateurFacadeREST extends BaseDaoBean<ProfilUtilisateur, 
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ProfilUtilisateur add(ProfilUtilisateur entity) {
-        ProfilUtilisateur profilUtilisateur = new ProfilUtilisateur();
-        profilUtilisateur = super.saveOne(entity);
-        return profilUtilisateur;
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response add(ProfilUtilisateur entity) {
+        ProfilUtilisateur profilUtilisateur = super.saveOne(entity);
+        GenericEntity<ProfilUtilisateur> genericEntity = new GenericEntity<ProfilUtilisateur>(profilUtilisateur) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+
+        return response;
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ProfilUtilisateur edit(
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response edit(
             @PathParam("id") PathSegment id,
             ProfilUtilisateur entity) {
-        ProfilUtilisateur profilUtilisateur = new ProfilUtilisateur();
-        profilUtilisateur = super.updateOne(entity);
-        return profilUtilisateur;
+        ProfilUtilisateurId key = getPrimaryKey(id);
+        ProfilUtilisateur profilUtilisateur = super.updateOne(super.find(key));
+        GenericEntity<ProfilUtilisateur> genericEntity = new GenericEntity<ProfilUtilisateur>(profilUtilisateur) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+
+        return response;
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(
+    public Response remove(
             @PathParam("id") PathSegment id) {
         ProfilUtilisateurId key = getPrimaryKey(id);
-        super.deleteOne(super.find(key));
+        Boolean isDelete = super.deleteOne(super.find(key));
+        GenericEntity<Boolean> genericEntity = new GenericEntity<Boolean>(isDelete) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+
+        return response;
     }
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ProfilUtilisateur chercher(
+    @Produces(MediaType.APPLICATION_XML)
+    public Response chercher(
             @PathParam("id") PathSegment id) {
         ProfilUtilisateurId key = getPrimaryKey(id);
-        return super.find(key);
+        ProfilUtilisateur profilUtilisateur = super.find(key);
+        GenericEntity<ProfilUtilisateur> genericEntity = new GenericEntity<ProfilUtilisateur>(profilUtilisateur) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+
+        return response;
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ProfilUtilisateur> findAll() {
-        return super.getAll();
+    @Produces(MediaType.APPLICATION_XML)
+    public Response findAll() {
+        List<ProfilUtilisateur> profilUtilisateurs = super.getAll();
+
+        GenericEntity<List<ProfilUtilisateur>> genericEntity = new GenericEntity<List<ProfilUtilisateur>>(profilUtilisateurs) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+
+        return response;
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public Response countREST() {
-        Response response = null;
         Long counts = super.count();
-        response = Response.ok(counts).build();
+        GenericEntity<Long> genericEntity = new GenericEntity<Long>(counts) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
         return response;
     }
 }

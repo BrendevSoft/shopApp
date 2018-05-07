@@ -13,7 +13,7 @@
             <meta name="apple-mobile-web-app-capable" content="yes" />
             <meta name="theme-color" content="#{guestPreferences.themeColors[guestPreferences.theme]}" />
         </f:facet>
-        <title>PrimeFaces Ultima</title>
+        <title>Shop App</title>
         <h:outputScript name="js/nanoscroller.js" library="ultima-layout" />
         <h:outputScript name="js/layout.js" library="ultima-layout" />
         <h:outputScript name="js/ripple.js" library="ultima-layout" />
@@ -21,9 +21,9 @@
         <ui:insert name="head"/>
     </h:head>
 
-    <h:body styleClass="main-body #{guestPreferences.compact ? 'layout-compact' : null}">
+    <h:body styleClass="main-body layout-compact">
         
-        <div class="layout-wrapper #{guestPreferences.menuLayout}">
+        <div class="layout-wrapper menu-layout-static">
             <ui:include src="./topbar.xhtml" />
             <ui:include src="./menu.xhtml" />
             
@@ -48,7 +48,7 @@
         <h:outputStylesheet name="css/nanoscroller.css" library="ultima-layout" />
         <h:outputStylesheet name="css/animate.css" library="ultima-layout" />
         <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
-        <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
+        <h:outputStylesheet name="css/layout-shopapp.css" library="ultima-layout" />
     </h:body>
 
 </html>

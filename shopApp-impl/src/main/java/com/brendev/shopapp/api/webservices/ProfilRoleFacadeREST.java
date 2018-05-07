@@ -18,6 +18,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
@@ -56,55 +57,97 @@ public class ProfilRoleFacadeREST extends BaseDaoBean<ProfilRole, ProfilRoleId> 
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ProfilRole add(ProfilRole entity) {
-        ProfilRole profilRole = new ProfilRole();
-        profilRole = super.saveOne(entity);
-        return profilRole;
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response add(ProfilRole entity) {
+        ProfilRole profilRole = super.saveOne(entity);
+        GenericEntity<ProfilRole> genericEntity = new GenericEntity<ProfilRole>(profilRole) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+
+        return response;
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ProfilRole edit(
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response edit(
             @PathParam("id") PathSegment id,
             ProfilRole entity) {
-        ProfilRole profilRole = new ProfilRole();
         ProfilRoleId key = getPrimaryKey(id);
-        profilRole = super.updateOne(super.find(key));
-        return profilRole;
+        ProfilRole profilRole = super.updateOne(super.find(key));
+        GenericEntity<ProfilRole> genericEntity = new GenericEntity<ProfilRole>(profilRole) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+
+        return response;
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(
+    public Response remove(
             @PathParam("id") PathSegment id) {
         ProfilRoleId key = getPrimaryKey(id);
-        super.deleteOne(super.find(key));
+        Boolean isDelete = super.deleteOne(super.find(key));
+        GenericEntity<Boolean> genericEntity = new GenericEntity<Boolean>(isDelete) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+
+        return response;
     }
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ProfilRole chercher(
+    @Produces(MediaType.APPLICATION_XML)
+    public Response chercher(
             @PathParam("id") PathSegment id) {
         ProfilRoleId key = getPrimaryKey(id);
-        return super.find(key);
+        ProfilRole profilRole = super.find(key);
+        GenericEntity<ProfilRole> genericEntity = new GenericEntity<ProfilRole>(profilRole) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+
+        return response;
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ProfilRole> findAll() {
-        return super.getAll();
+    @Produces(MediaType.APPLICATION_XML)
+    public Response findAll() {
+        List<ProfilRole> profilRoles = super.getAll();
+
+        GenericEntity<List<ProfilRole>> genericEntity = new GenericEntity<List<ProfilRole>>(profilRoles) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+
+        return response;
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public Response countREST() {
-        Response response = null;
         Long counts = super.count();
-        response = Response.ok(counts).build();
+        GenericEntity<Long> genericEntity = new GenericEntity<Long>(counts) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
         return response;
     }
+
 }

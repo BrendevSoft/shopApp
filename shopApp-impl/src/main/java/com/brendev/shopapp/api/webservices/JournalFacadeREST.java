@@ -17,6 +17,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -33,52 +34,88 @@ public class JournalFacadeREST extends BaseDaoBean<Journal, Long> {
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Journal add(Journal entity) {
-        Journal journal = new Journal();
-        journal = super.saveOne(entity);
-        return journal;
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response add(Journal entity) {
+        Journal journal = super.saveOne(entity);
+        GenericEntity<Journal> genericEntity = new GenericEntity<Journal>(journal) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeaderValue")
+                .build();
+        return response;
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Journal edit(
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response edit(
             @PathParam("id") Long id,
             Journal entity) {
-        Journal journal = new Journal();
-        journal = super.updateOne(entity);
-        return journal;
+        Journal journal = super.updateOne(super.find(id));
+        GenericEntity<Journal> genericEntity = new GenericEntity<Journal>(journal) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeaderValue")
+                .build();
+        return response;
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(
+    public Response remove(
             @PathParam("id") Long id) {
-        super.deleteOne(super.find(id));
+        Boolean isDelete = super.deleteOne(super.find(id));
+        GenericEntity<Boolean> genericEntity = new GenericEntity<Boolean>(isDelete) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("sommeheader", "somzHeaderValue")
+                .build();
+
+        return response;
     }
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Journal chercher(
+    @Produces(MediaType.APPLICATION_XML)
+    public Response chercher(
             @PathParam("id") Long id) {
-        return super.find(id);
+        Journal journal = super.find(id);
+        GenericEntity<Journal> genericEntity = new GenericEntity<Journal>(journal) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someheaderValue")
+                .build();
+        return response;
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Journal> findAll() {
-        return super.getAll();
+    @Produces(MediaType.APPLICATION_XML)
+    public Response findAll() {
+        List<Journal> journals = super.getAll();
+        GenericEntity<List<Journal>> genericEntities = new GenericEntity<List<Journal>>(journals) {
+
+        };
+        Response response = Response.ok(genericEntities)
+                .header("someHeader", "someheaderValue")
+                .build();
+        return response;
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public Response countREST() {
-        Response response = null;
         Long counts = super.count();
-        response = Response.ok(counts).build();
+        GenericEntity<Long> genericEntity = new GenericEntity<Long>(counts){
+            
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
         return response;
     }
 

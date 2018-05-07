@@ -5,7 +5,6 @@
  */
 package com.brendev.shopapp.api.webservices;
 
-import com.brendev.shopapp.api.constantes.MethodeJournalisation;
 import com.brendev.shopapp.api.dao.core.impl.BaseDaoBean;
 import com.brendev.shopapp.api.entities.Profil;
 import com.brendev.shopapp.api.utils.LogUtils;
@@ -22,7 +21,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.apache.log4j.Level;
 
 /**
  *
@@ -32,11 +30,8 @@ import org.apache.log4j.Level;
 @Path("profil")
 public class ProfilFacadeREST extends BaseDaoBean<Profil, Long> {
 
-    private MethodeJournalisation journalisation;
-
     public ProfilFacadeREST() {
         super(Profil.class);
-        journalisation = new MethodeJournalisation();
     }
 
     @POST
@@ -113,9 +108,14 @@ public class ProfilFacadeREST extends BaseDaoBean<Profil, Long> {
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public Response countREST() {
-        //Response response = null;
-        //Long counts = super.count();
-        //response = Response.ok(counts).build();
-        return Response.ok(super.count()).build();
+        Long counts = super.count();
+        GenericEntity<Long> genericEntity = new GenericEntity<Long>(counts) {
+
+        };
+        Response response = Response.ok(genericEntity)
+                .header("someHeader", "someHeadervalue")
+                .build();
+        return response;
     }
+
 }
