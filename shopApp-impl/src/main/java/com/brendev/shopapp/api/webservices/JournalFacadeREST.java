@@ -93,7 +93,7 @@ public class JournalFacadeREST extends BaseDaoBean<Journal, Long> {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response findAll() {
         List<Journal> journals = super.getAll();
         GenericEntity<List<Journal>> genericEntities = new GenericEntity<List<Journal>>(journals) {
