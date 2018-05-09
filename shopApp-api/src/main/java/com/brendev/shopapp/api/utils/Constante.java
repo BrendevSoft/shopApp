@@ -3,15 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.brendev.shopapp.api.constantes;
+package com.brendev.shopapp.api.utils;
 
-
-import com.brendev.shopapp.api.entities.Utilisateur;
-import com.brendev.shopapp.api.shiro.EntityRealm;
 import java.io.IOException;
 import java.io.Serializable;
-import org.omnifaces.util.Faces;
-
 
 /**
  *
@@ -57,14 +52,4 @@ public abstract class Constante implements Serializable {
     public Constante() {
     }
 
-    public static void bloqueLien() {
-        Utilisateur user = EntityRealm.getUser();
-        try {
-            if (user == null) {
-                Faces.redirect("access-denied.xhtml");
-            }
-        } catch (IOException ex) {
-            System.out.println("Sa n'a pas marché!!!!!!!");
-        }
-    }
 }

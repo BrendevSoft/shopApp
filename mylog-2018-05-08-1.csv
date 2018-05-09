@@ -1,0 +1,2 @@
+DATE;LOGLEVEL;EVENT;RESPONSE
+2018-05-06 00:02:12;INFO;AJOUT DU PROFIL;{someHeader=[someHeaderValue]}Profil{id=null, nom=2eme test, description=2eme test}

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Properties>
-        <Property name="csvLog.fileName">C:/Users/Brendev/Documents/Javaprojects/shopApp/mylog</Property>
+        <Property name="csvLog.fileName">C:/Users/Brendev/Documents/java/shopApp/mylog</Property>
         <Property name="file-header">DATE;LOGLEVEL;EVENT;RESPONSE</Property>
     </Properties>
     <Appenders>
       <RollingFile name="csvFile" 
                      fileName="${csvLog.fileName}.csv"
-                     filePattern="C:/Users/Brendev/Documents/Javaprojects/shopApp/mylog-%d{yyyy-MM-dd}-%i.csv" >
+                     filePattern="C:/Users/Brendev/Documents/java/shopApp/mylog-%d{yyyy-MM-dd}-%i.csv" >
             <CsvParameterLayout delimiter=";" header="${file-header}\n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />

@@ -53,10 +53,10 @@ public class EntityRealm extends AuthorizingRealm {
         this.setCredentialsMatcher(credentialsMatcher);
         InitialContext context = new InitialContext();
         //La classe session bean de l'utilisateur(précise la classe du sesion bean)
-        this.pudbl = (ProfilUtilisateurDaoBeanLocal) context.lookup("java:global/shopApp-impl/ProfilUtilisateurDaoBean");
-        this.udbl = (UtilisateurDaoBeanLocal) context.lookup("java:global/shopApp-impl/UtilisateurDaoBean");
+        this.pudbl = (ProfilUtilisateurDaoBeanLocal) context.lookup("java:global/securityApp/ProfilUtilisateurDaoBean");
+        this.udbl = (UtilisateurDaoBeanLocal) context.lookup("java:global/securityApp/UtilisateurDaoBean");
         //La classe session bean des roles par profil(précise la classe du sesion bean)
-        this.prdbl = (ProfilRoleDaoBeanLocal) context.lookup("java:global/shopApp-impl/ProfilRoleDaoBean");
+        this.prdbl = (ProfilRoleDaoBeanLocal) context.lookup("java:global/securityApp/ProfilRoleDaoBean");
         System.out.println("out entity realm");
     }
 

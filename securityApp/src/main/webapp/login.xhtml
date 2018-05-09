@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>My Security App</title>
+        <h:outputScript name="js/ripple.js" library="ultima-layout" />
+        <h:outputScript name="js/layout.js" library="ultima-layout" />
+    </h:head>
+
+    <h:body styleClass="login-body">
+        <h:form id="login">
+            <p:growl id="message" life="4000" showSummary="true" />
+            <p:outputPanel autoUpdate="true">
+                <div class="card login-panel ui-fluid">
+                    <div class="ui-g">
+                        <!--<div class="ui-g-12">
+                            <p:graphicImage name="images/logo-ultima.svg" library="ultima-layout" />
+                        </div>-->
+                        <div class="ui-g-12">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="identifiant" value="#{loginBean.username}"/>
+                                <label>Identifiant</label>
+                            </h:panelGroup>
+                        </div>
+                        <div class="ui-g-12">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:password id="motdepasse" value="#{loginBean.password}"/>
+                                <label>Mot de passe</label>
+                            </h:panelGroup>    
+                        </div>
+                        <div class="ui-g-12">
+                            <p:commandButton process="@form"  value="Se connecter" icon="ui-icon-person" update="message" actionListener="#{loginBean.login()}"/>
+                            <p:commandButton process="@form"  value="Inscription" icon="ui-icon-add" update="message" onclick="PF('profileChoose').show()"/>
+                            <p:commandButton value="Mot de passe oublié" icon="ui-icon-help" styleClass="secondary" onclick="PF('dialogOublie').show()"/>
+                        </div>
+                    </div>
+                </div>
+            </p:outputPanel>
+        </h:form>
+        <p:dialog widgetVar="dialogpasse" width="400" position="center">
+            <h:form>
+                <p:growl id="grow2" life="4000" showSummary="true" />
+                <p:outputPanel autoUpdate="true">
+                    <div class="card">
+                        <div class="ui-g">
+                            <center>
+                                <div class="ui-g-12">
+                                    <h2>Premiere connexion <br/>
+                                        Modifiez le mot de passe</h2>
+                                </div>
+                                <div class="ui-g-12">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:password  requiredMessage="Saisir le premier mot de passe" required="true" id="newPasse" value="#{loginBean.newPass}" feedback="true"/>
+                                        <p:watermark for="newPasse" value="#{loginBean.newPass}"/>
+                                        <label>Mot de passe</label>
+                                    </h:panelGroup>
+                                </div>
+                                <div class="ui-g-12">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:password  requiredMessage="Saisir le deuxieme mot de passe" required="true" id="newSasie" value="#{loginBean.retapPass}" feedback="true"/>
+                                        <p:watermark for="newSasie" value="#{loginBean.retapPass}"  />
+                                        <label>Confirmer le mot de passe</label>
+                                    </h:panelGroup>
+                                </div>
+                                <div class="ui-g-12">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="question" required="true" requiredMessage="saisir une question" value="#{loginBean.question}"/>
+                                        <label>Question</label>
+                                    </h:panelGroup>
+                                </div>
+                                <div class="ui-g-12">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="reponse" required="true" requiredMessage="saisir la réponse à la question" value="#{loginBean.reponse}"/>
+                                        <label>Réponse</label>
+                                    </h:panelGroup>
+                                </div>
+                                <div class="ui-g-12">
+                                    <p:commandButton value="Retour" style="padding: 5px" onclick="PF('dialogpasse').hide()"
+                                                     process="@form"/>
+                                    <p:commandButton  value="Modifier" style="padding: 5px" update="grow2"
+                                                      action="#{loginBean.modifierPasse()}"
+                                                      process="@form"/>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+        <p:dialog header="Vérification du login" widgetVar="dialogOublie" position="center" width="400">
+            <h:form>
+                <p:growl id="grow2" life="4000" showSummary="true" />
+                <center></center>
+                <p:outputPanel id="ver" autoUpdate="true">
+                    <center>
+                        <div class="ui-g">
+                            <div class="ui-g-12">
+                                <h2>Vérification du login</h2>
+                            </div>
+                            <div class="ui-g-12">
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText id="newPasse" requiredMessage="Saisir l'identifiant" required="true" value="#{loginBean.per}"/>
+                                    <label>Identifiant</label>
+                                </h:panelGroup>
+                            </div>
+                            <div class="ui-g-12">
+                                <p:commandButton value="Vérifier" style="padding: 5px" update="grow2,ver,:rec:question"
+                                                 action="#{loginBean.recupererQuestion()}"
+                                                 process="@form"/>
+                                <p:commandButton value="Fermer" style="padding: 5px" update="grow2,ver,:rec:question"
+                                                 action="#{loginBean.recupererQuestion()}"
+                                                 process="@form"/>
+                            </div>
+                        </div>
+                    </center>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+        <p:dialog widgetVar="dialogRecup" position="center" width="500">
+            <h:form id="rec">
+                <p:growl id="grow2" life="4000" showSummary="true" />
+                <center><h2>Vérification de la réponse et </h2>
+                    <h2>réinitialisation du mot de passe</h2></center>
+                <p:outputPanel autoUpdate="true">
+                    <center>
+                        <div class="ui-g">
+                            <div class="ui-g-12">
+                                <h2>Vérification de la réponse et <br/>
+                                    réinitialisation du mot de passe</h2>
+                            </div>
+                            <div class="ui-g-12">
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText id="question" value="#{loginBean.recupererQuestion()}" disabled="true"/>
+                                </h:panelGroup>
+                            </div>
+                            <div class="ui-g-12">
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText id="reponse" requiredMessage="Veillez entrer une réponse" required="true" value="#{loginBean.reponse}"/>
+                                    <label>Réponse</label>
+                                </h:panelGroup>
+                            </div>
+                            <div class="ui-g-12">
+                                <p:commandButton value="Valider" style="padding: 5px" update="grow2"
+                                                 action="#{loginBean.reinitialiserPasse()}"
+                                                 process="@form"/>
+                            </div>
+                        </div>
+                    </center>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+        <p:dialog widgetVar="error" width="500" position="top" style="margin-top:1%; background-image:url(#{resource['ultima-layout:images/login/login.png']}); background-repeat:no-repeat; background-position:center; background-size:cover;">
+
+            <div class="card exception-panel" style="background-color: #e62a10">
+                <i class="material-icons">&#xE000;</i>
+                <h1>Exception Occured</h1>
+                <div class="exception-detail">Votre compte est inactif!!!Veillez contacter l'administrateur</div>
+            </div>
+        </p:dialog>
+
+        <div class="login-footer">My Security App</div>
+
+        <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
+        <h:outputStylesheet name="css/layout-shopapp.css" library="ultima-layout" />
+    </h:body>
+
+</html>

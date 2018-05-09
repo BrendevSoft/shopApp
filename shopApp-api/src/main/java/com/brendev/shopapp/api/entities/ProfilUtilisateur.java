@@ -32,11 +32,11 @@ public class ProfilUtilisateur extends BaseEntity{
     @EmbeddedId
     ProfilUtilisateurId id;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "utilisateur",insertable = true,updatable = true)
     private Utilisateur utilisateur;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "profil",insertable = true,updatable = true)
     private Profil profil;
     

@@ -20,5 +20,6 @@
         <module>shopApp-impl</module>
         <module>shopApp-api</module>
         <module>shopApp-web</module>
-    </modules>
+    <module>securityApp</module>
+  </modules>
 </project>

@@ -30,11 +30,11 @@ public class ProfilRole extends BaseEntity {
     @Column(name = "id", nullable = false)
     ProfilRoleId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "profil", insertable = true, updatable = true)
     private Profil profil;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rolee", insertable = true, updatable = true)
     private Rolee role;
 
