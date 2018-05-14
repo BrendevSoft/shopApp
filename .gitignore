@@ -2,3 +2,8 @@
 /shopApp-impl/target/
 /shopApp-web/target/
 /securityApp/target/
+/shopApp-impl/nbproject/
+/mv-rdvmedecins-pf/target/
+/mv-rdvmedecins-spring-dao-jpa/target/
+/mv-rdvmedecins-spring-metier/target/
+/SuperShop/target/

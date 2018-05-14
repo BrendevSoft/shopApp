@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <!-- <persistence-unit name="spring-dao-jpa-hibernate-mysqlPU" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>jdbc/shopAppV1</jta-data-source>
+       <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>rdvmedecins.jpa.Client</class>
+        <class>rdvmedecins.jpa.Creneau</class>
+        <class>rdvmedecins.jpa.Medecin</class>
+        <class>rdvmedecins.jpa.Rv</class>
+        <properties>-->
+            <!-- <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossStandAloneJtaPlatform"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/dbrdvmedecins2"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.username" value="shop"/>
+            <property name="hibernate.connection.password" value="shop"/>
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+            <property name="hibernate.show_sql" value="true"/>
+            
+            <property name="eclipselink.target-server" value="SunAS9"> </property>
+            <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.MySQLPlatform">   </property>
+          
+        </properties>
+    </persistence-unit>-->
+    
+    <persistence-unit name="spring-dao-jpa-hibernate-mysqlPU" transaction-type="JTA">
+        <jta-data-source>jdbc/shopAppV1</jta-data-source>
+        <class>rdvmedecins.jpa.Client</class>
+        <class>rdvmedecins.jpa.Creneau</class>
+        <class>rdvmedecins.jpa.Medecin</class>
+        <class>rdvmedecins.jpa.Rv</class>
+        <properties>
+            <property name="hibernate.transaction.manager_lookup_class"
+                      value="com.atomikos.icatch.jta.hibernate3.TransactionManagerLookup" />
+            <property name="hibernate.transaction.factory_class"
+                      value="org.hibernate.transaction.CMTTransactionFactory" />
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,7 +1,5 @@
 package com.brendev.shopapp.api.shiro;
 
-
-
 import com.brendev.shopapp.api.dao.ProfilRoleDaoBeanLocal;
 import com.brendev.shopapp.api.dao.ProfilUtilisateurDaoBeanLocal;
 import com.brendev.shopapp.api.dao.UtilisateurDaoBeanLocal;
@@ -53,10 +51,10 @@ public class EntityRealm extends AuthorizingRealm {
         this.setCredentialsMatcher(credentialsMatcher);
         InitialContext context = new InitialContext();
         //La classe session bean de l'utilisateur(précise la classe du sesion bean)
-        this.pudbl = (ProfilUtilisateurDaoBeanLocal) context.lookup("java:global/securityApp/ProfilUtilisateurDaoBean");
-        this.udbl = (UtilisateurDaoBeanLocal) context.lookup("java:global/securityApp/UtilisateurDaoBean");
+        this.pudbl = (ProfilUtilisateurDaoBeanLocal) context.lookup("java:global/SuperShop/ProfilUtilisateurDaoBean");
+        this.udbl = (UtilisateurDaoBeanLocal) context.lookup("java:global/SuperShop/UtilisateurDaoBean");
         //La classe session bean des roles par profil(précise la classe du sesion bean)
-        this.prdbl = (ProfilRoleDaoBeanLocal) context.lookup("java:global/securityApp/ProfilRoleDaoBean");
+        this.prdbl = (ProfilRoleDaoBeanLocal) context.lookup("java:global/SuperShop/ProfilRoleDaoBean");
         System.out.println("out entity realm");
     }
 
@@ -114,7 +112,6 @@ public class EntityRealm extends AuthorizingRealm {
         }
     }
 
-  
     public static Utilisateur getUser() {
         Subject currentUser = SecurityUtils.getSubject();
         if (currentUser.isAuthenticated()) {

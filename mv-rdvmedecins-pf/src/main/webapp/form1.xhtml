@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  <p:toolbar>
+    <p:toolbarGroup align="left">  
+      <h:outputText value="#{msg['form1.medecin']}"/>  
+      <p:selectOneMenu value="#{form.idMedecin}" effect="fade">  
+        <f:selectItems value="#{form.medecins}" var="medecin" itemLabel="#{medecin.titre} #{medecin.prenom} #{medecin.nom}" itemValue="#{medecin.id}"/>  
+        <p:ajax update=":formulaire:contenu"  listener="#{form.hideAgenda}" />  
+      </p:selectOneMenu>              
+      <p:separator/>
+      <h:outputText value="#{msg['form1.jour']}"/>
+      <p:calendar id="calendrier" value="#{form.jour}" readOnlyInputText="true">
+        <p:ajax event="dateSelect" listener="#{form.hideAgenda}" update=":formulaire:contenu"/>  
+      </p:calendar>
+      <p:separator/>
+      <p:commandButton id="resa-agenda" icon="ui-icon-check" actionListener="#{form.getAgenda}" update=":formulaire:contenu"/>  
+      <p:tooltip for="resa-agenda" value="#{msg['form1.agenda']}"/>  
+      <p:commandButton id="resa-precedent" icon="ui-icon-seek-prev" actionListener="#{form.getPreviousAgenda}" update=":formulaire:contenu"/>  
+      <p:tooltip for="resa-precedent" value="#{msg['form1.precedent']}"/>  
+      <p:commandButton id="resa-suivant" icon="ui-icon-seek-next" actionListener="#{form.getNextAgenda}" update=":formulaire:contenu"/>          
+      <p:tooltip for="resa-suivant" value="#{msg['form1.suivant']}"/>  
+      <p:commandButton id="resa-today" icon="ui-icon-home" actionListener="#{form.today}" update=":formulaire:contenu"/>          
+      <p:tooltip for="resa-today" value="#{msg['form1.today']}"/>  
+    </p:toolbarGroup>
+    <p:toolbarGroup align="right">  
+      <p:menuButton value="#{msg['form1.options']}">  
+        <p:menuitem id="menuitem-francais" value="#{msg['form1.francais']}" actionListener="#{form.setFrenchLocale}" update=":formulaire"/>  
+        <p:menuitem id="menuitem-anglais" value="#{msg['form1.anglais']}" actionListener="#{form.setEnglishLocale}" update=":formulaire"/>  
+        <p:menuitem id="menuitem-rafraichir" value="#{msg['form1.rafraichir']}" actionListener="#{form.refresh}" update=":formulaire:contenu"/>  
+      </p:menuButton>  
+    </p:toolbarGroup>  
+  </p:toolbar>
+</html>

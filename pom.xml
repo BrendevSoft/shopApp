@@ -20,6 +20,10 @@
         <module>shopApp-impl</module>
         <module>shopApp-api</module>
         <module>shopApp-web</module>
-    <module>securityApp</module>
-  </modules>
+        <module>securityApp</module>
+        <module>mv-rdvmedecins-spring-dao-jpa</module>
+        <module>mv-rdvmedecins-spring-metier</module>
+        <module>mv-rdvmedecins-pf</module>
+        <module>SuperShop</module>
+    </modules>
 </project>

@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+  <body>
+    <!-- menu contextuel -->
+    <p:contextMenu for="agenda">  
+      <p:menuitem value="#{msg['form2.reserver']}" update=":formulaire:contenu" action="#{form.action}" oncomplete="handleRequest(xhr, status, args)">
+        <f:setPropertyActionListener value="reserver" target="#{form.action}"/>
+      </p:menuitem>
+      <p:menuitem value="#{msg['form2.supprimer']}" onclick="confirmation.show()"/>
+    </p:contextMenu>  
+    <!-- agenda -->
+    <p:dataTable id="agenda" value="#{form.myDataModel}" var="creneauMedecinJour" style="width: 800px"
+                 selectionMode="single" selection="#{form.creneauChoisi}" emptyMessage="#{msg['form2.emtyMessage']}">
+      <!-- colonne des horaires -->
+      <p:column style="width: 100px">  
+        <f:facet name="header">  
+          <h:outputText value="#{msg['form2.creneauHoraire']}"/> 
+        </f:facet>  
+        <div align="center">
+          <h:outputFormat value="{0,number,#00}:{1,number,#00} - {2,number,#00}:{3,number,#00}">
+            <f:param value="#{creneauMedecinJour.creneau.hdebut}" />
+            <f:param value="#{creneauMedecinJour.creneau.mdebut}" />
+            <f:param value="#{creneauMedecinJour.creneau.hfin}" />
+            <f:param value="#{creneauMedecinJour.creneau.mfin}" />
+          </h:outputFormat>
+        </div>
+      </p:column>  
+      <!-- colonne des clients -->
+      <p:column style="width: 300px">  
+        <f:facet name="header">  
+          <h:outputText value="#{msg['form2.client']}"/>  
+        </f:facet>
+        <ui:fragment rendered="#{creneauMedecinJour.rv!=null}">
+          <h:outputText value="#{creneauMedecinJour.rv.client.titre} #{creneauMedecinJour.rv.client.prenom} #{creneauMedecinJour.rv.client.nom}" />
+        </ui:fragment>
+        <ui:fragment rendered="#{creneauMedecinJour.rv==null and form.creneauChoisi!=null and form.creneauChoisi.creneau.id==creneauMedecinJour.creneau.id}">
+          <p:autoComplete completeMethod="#{form.completeClients}" value="#{form.identiteClient}" size="30"/>
+          <p:spacer width="50px"/>
+          <p:commandLink action="#{form.action()}" value="#{msg['form2.valider']}" update=":formulaire:contenu" oncomplete="handleRequest(xhr, status, args)">
+            <f:setPropertyActionListener value="valider" target="#{form.action}"/>
+          </p:commandLink>
+          <p:spacer width="50px"/>
+          <p:commandLink action="#{form.action()}" value="#{msg['form2.annuler']}" update=":formulaire:contenu">
+            <f:setPropertyActionListener value="annuler" target="#{form.action}"/>
+          </p:commandLink>
+        </ui:fragment>
+      </p:column>  
+    </p:dataTable>
+
+    <!-- confirmation suppression RV -->
+    <p:confirmDialog id="confirmDialog" message="#{msg['form2.suppression.confirmation']}"  
+                     header="#{msg['form2.suppression.message']}" severity="alert" widgetVar="confirmation">                   
+      <p:commandButton value="#{msg['form2.supprimer.oui']}" update=":formulaire:contenu" action="#{form.action}"
+                       oncomplete="handleRequest(xhr, status, args); confirmation.hide()">
+        <f:setPropertyActionListener value="supprimer" target="#{form.action}"/>
+      </p:commandButton>
+      <p:commandButton value="#{msg['form2.supprimer.non']}" onclick="confirmation.hide()" type="button" />                
+    </p:confirmDialog>  
+
+    <!-- message d'erreur -->
+    <p:dialog header="#{msg['form2.erreur']}" widgetVar="dlgErreur" height="100" >  
+      <h:outputText value="#{form.msgErreur}" />  
+    </p:dialog>
+
+    <!-- gestion du retour serveur -->
+    <script type="text/javascript">  
+      function handleRequest(xhr, status, args) {  
+        // erreur ?
+        if(args.erreur) {  
+          dlgErreur.show();  
+        }  
+      }  
+    </script> 
+  </body>
+</html>
+
