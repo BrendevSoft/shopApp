@@ -1,0 +1,31 @@
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+        ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="rollingFileAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>C:/log/logback.log</File>
+ 
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>C:/log/logback-%d{yyyy-MM-dd---HH-mm}.log</FileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+ 
+        <encoder>
+            <Pattern>%d{HH:mm:ss} [%thread] %-5level %logger - %msg %n</Pattern>
+        </encoder>
+    </appender>
+ 
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="rollingFileAppender" />
+    </root>
+
+</configuration>

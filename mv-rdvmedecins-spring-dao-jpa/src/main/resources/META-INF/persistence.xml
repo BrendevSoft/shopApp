@@ -25,12 +25,14 @@
     </persistence-unit>-->
     
     <persistence-unit name="spring-dao-jpa-hibernate-mysqlPU" transaction-type="JTA">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>jdbc/shopAppV1</jta-data-source>
         <class>rdvmedecins.jpa.Client</class>
         <class>rdvmedecins.jpa.Creneau</class>
         <class>rdvmedecins.jpa.Medecin</class>
         <class>rdvmedecins.jpa.Rv</class>
         <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.transaction.manager_lookup_class"
                       value="com.atomikos.icatch.jta.hibernate3.TransactionManagerLookup" />
             <property name="hibernate.transaction.factory_class"

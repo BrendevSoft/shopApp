@@ -25,5 +25,6 @@
         <module>mv-rdvmedecins-spring-metier</module>
         <module>mv-rdvmedecins-pf</module>
         <module>SuperShop</module>
+        <module>SpringMVCHibernateWithSpringSecurityExample</module>
     </modules>
 </project>
